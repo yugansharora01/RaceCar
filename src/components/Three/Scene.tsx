@@ -7,6 +7,7 @@ import { Physics } from '@react-three/rapier'
 import Model from './Model'
 import Ground from './Ground'
 import Props from './Props'
+import Car from './Car'
 
 enum Controls {
   forward = 'forward',
@@ -32,7 +33,7 @@ export default function Scene() {
           <Suspense fallback={null}>
             <PerspectiveCamera makeDefault position={[5, 10, 15]} fov={50} />
             <OrbitControls 
-              enablePan={false} 
+              enablePan={true} 
               minDistance={3} 
               maxDistance={30} 
               makeDefault 
@@ -49,7 +50,8 @@ export default function Scene() {
             {/* Physics World */}
             <Physics gravity={[0, -9.81, 0]} debug>
               {/* The Model with controls */}
-              <Model url="/models/car1.glb" />
+              {/* <Model url="/models/car1.glb" /> */}
+              <Car url="/models/car1.glb" />
               
               <Ground />
               <Props />
