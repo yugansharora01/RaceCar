@@ -46,8 +46,10 @@ export default function Car({ url }: { url: string }) {
     // Suspension parameters — tuned for mass=50
     const rayLength = 1.2;
     const suspensionRest = 0.6;
-    const stiffness = 400;
-    const damping = 80;
+    const stiffness = 300;
+    const damping = 150;
+    // Max force per wheel = just enough to hold the car up (prevents launch)
+    const maxForcePerWheel = 0.1;  
 
     // Drive / steer parameters
     const driveForce = 120;
@@ -81,7 +83,8 @@ export default function Car({ url }: { url: string }) {
 
           const springForce = compression * stiffness;
           const dampingForce = -verticalVel * damping;
-          const totalSuspension = Math.max(springForce + dampingForce, 0);
+          // Clamp: never push harder than maxForcePerWheel, never pull down
+          const totalSuspension = Math.max(Math.min(springForce + dampingForce, maxForcePerWheel), 0);
 
           rb.addForceAtPoint(
             { x: 0, y: totalSuspension, z: 0 },
@@ -156,15 +159,17 @@ export default function Car({ url }: { url: string }) {
       colliders={false}
       mass={50}
       friction={0.7}
+      restitution={0}
       linearDamping={0.5}
       angularDamping={0.3}
       canSleep={false}
-      position={[0, 3, 0]}
+      position={[0, 1.5, 0]}
     >
       <primitive object={scene} />
       <CuboidCollider
         args={[1.05, 0.5, 2.2]}
-        position={[0, 0.5, 0]}
+        position={[0, -0.5, 0]}
+        restitution={0}
       />
     </RigidBody>
   );
