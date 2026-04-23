@@ -51,7 +51,7 @@ export default function Scene() {
             <Physics gravity={[0, -9.81, 0]} debug>
               {/* The Model with controls */}
               {/* <Model url="/models/car1.glb" /> */}
-              <Car url="/models/car1.glb" />
+              <Car url="/models/car.glb" />
               
               <Ground />
               <Props />
